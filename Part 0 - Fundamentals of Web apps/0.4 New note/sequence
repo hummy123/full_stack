@@ -1,0 +1,31 @@
+note over browser:
+User clicks form 
+submit button.
+end note
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+
+note over server:
+Server pushes form
+input to array.
+end note
+server-->browser: Respond with HTML page https://studies.cs.helsinki.fi/exampleapp/notes
+
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->browser: CSS code (main.css)
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+
+server-->browser: JavaScript code containing XHTTP reuest (main.js)
+note over browser:
+Browser runs code to
+get note data as JSON.
+end note
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser: data.json
+
+note over browser:
+xhttp.onreadystatechange
+triggered. JSON parsed and
+unordered list of data created.
+end note

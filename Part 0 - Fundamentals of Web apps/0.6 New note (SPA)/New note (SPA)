@@ -1,0 +1,18 @@
+note over browser:
+User clicks form 
+submit button.
+end note
+
+note over browser:
+Create new note and add
+it to existing list.
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+note over server:
+Server pushes form
+input to array.
+end note
+
+server-->browser: {"message":"note created"}
