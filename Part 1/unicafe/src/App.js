@@ -31,19 +31,19 @@ const StatsController = ({stats: {bad, good, neutral}}) => {
     const average = good - bad
     const positive = (good / all * 100) + "%"
 
-    return (<>
+    return (<table><tbody>
         <Stats type={"good"} num={good}/>
         <Stats type={"neutral"} num={neutral} />
         <Stats type={"bad"} num={bad} />
         <Stats type={"all"} num={all} />
         <Stats type={"average"} num={average} />
         <Stats type={"positive"} num={positive} />
-    </>)
+    </tbody></table>)
 }
 
 const Heading = (props) => <h1>{props.text}</h1>
 const Button = (props) => <button onClick={props.onClick}>{props.text}</button>
-const Stats = (props) => <p>{props.type} {props.num}</p>
+const Stats = (props) => <tr><th>{props.type}</th><td>{props.num}</td></tr>
 
 
 export default App
