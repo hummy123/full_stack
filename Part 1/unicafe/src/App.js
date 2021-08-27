@@ -10,29 +10,35 @@ const App = () => {
     const handleNeutral = () => setNeutral(neutral+1)
     const handleBad = () => setBad(bad+1)
 
+    return (
+        <>
+            <Heading text={"give feedback"} />
+            <Button text={"good"} onClick={() => handleGood()} />
+            <Button text={"neutral"} onClick={() => handleNeutral()} />
+            <Button text={"bad"} onClick={() => handleBad()} />
+            <Heading text={"stats"} />
+            <StatsController stats={{good, neutral, bad}}/>
+        </>
+    )
+}
+
+const StatsController = ({stats: {bad, good, neutral}}) => {
+
     const all = good + bad + neutral
+
+    if (all === 0) return <p>No feedback given.</p>
+
     const average = good - bad
     const positive = (good / all * 100) + "%"
 
-    const textGood = "good"
-    const textNeutral = "neutral"
-    const textBad = "bad"
-
-    return (
-        <div>
-            <Heading text={"give feedback"} />
-            <Button text={textGood} onClick={() => handleGood()} />
-            <Button text={textNeutral} onClick={() => handleNeutral()} />
-            <Button text={textBad} onClick={() => handleBad()} />
-            <Heading text={"stats"} />
-            <Stats type={textGood} num={good} />
-            <Stats type={textNeutral} num={neutral} />
-            <Stats type={textBad} num={bad} />
-            <Stats type={"all"} num={all} />
-            <Stats type={"average"} num={average} />
-            <Stats type={"positive"} num={positive} />
-        </div>
-    )
+    return (<>
+        <Stats type={"good"} num={good}/>
+        <Stats type={"neutral"} num={neutral} />
+        <Stats type={"bad"} num={bad} />
+        <Stats type={"all"} num={all} />
+        <Stats type={"average"} num={average} />
+        <Stats type={"positive"} num={positive} />
+    </>)
 }
 
 const Heading = (props) => <h1>{props.text}</h1>
