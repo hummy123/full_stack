@@ -10,6 +10,10 @@ const App = () => {
     const handleNeutral = () => setNeutral(neutral+1)
     const handleBad = () => setBad(bad+1)
 
+    const all = good + bad + neutral
+    const average = good - bad
+    const positive = (good / all * 100) + "%"
+
     const textGood = "good"
     const textNeutral = "neutral"
     const textBad = "bad"
@@ -24,6 +28,9 @@ const App = () => {
             <Stats type={textGood} num={good} />
             <Stats type={textNeutral} num={neutral} />
             <Stats type={textBad} num={bad} />
+            <Stats type={"all"} num={all} />
+            <Stats type={"average"} num={average} />
+            <Stats type={"positive"} num={positive} />
         </div>
     )
 }
