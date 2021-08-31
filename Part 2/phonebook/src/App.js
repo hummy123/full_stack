@@ -7,13 +7,20 @@ const App = () => {
   ])
   const [ newName, setNewName ] = useState('')
 
-    const addPerson = (event) => {
-        event.preventDefault()
+    const addPerson = () => {
         const personObject = {
             name: newName
         }
         setPersons(persons.concat(personObject))
         setNewName("")
+    }
+
+    const checkExists = (event) => {
+        event.preventDefault()
+        if (persons.some(person => person.name === newName))
+            alert(`${newName} already exists!`)
+        else
+            addPerson()
     }
 
     const enterName = (event) => {
@@ -23,7 +30,7 @@ const App = () => {
   return (
       <div>
         <h2>Phonebook</h2>
-        <form onSubmit={addPerson}>
+        <form onSubmit={checkExists}>
           <div>
             name: <input value={newName} onChange={enterName} />
           </div>
