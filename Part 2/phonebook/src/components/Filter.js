@@ -19,6 +19,7 @@ const Filter = ({object: {setFilterPeople, persons}}) => {
             //return person if name contains filter string
             if (lowName.includes(lowFilter))
                 return person
+            else return undefined
     }))}
 
     return(
