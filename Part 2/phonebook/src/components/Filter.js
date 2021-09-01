@@ -1,12 +1,11 @@
-import React, {useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import TextInput from "./TextInput";
 
 const Filter = ({object: {setFilterPeople, persons}}) => {
     //declare values used for filter input
     const [ textFilter, setTextFilter ] = useState('')
 
-    const setPeopleFilter = (text) => {
-        setTextFilter(text)
+    useEffect(() => {
         setFilterPeople(persons.filter(person => {
             //store lower case values, so comparison is case-insensitive
             const lowName = person.name.toLowerCase()
@@ -16,15 +15,15 @@ const Filter = ({object: {setFilterPeople, persons}}) => {
             if (lowName.includes(lowFilter))
                 return person
             else return undefined
-        }))}
+        }))
+    }, [textFilter, persons])
 
+    //objects for text input element
     const textObjects = {
         label: "name",
         value: textFilter,
-        setValue: setPeopleFilter
+        setValue: setTextFilter
     }
-
-
 
     return(
         <>

@@ -28,7 +28,8 @@ const Form = (props) => {
         if (!checkExists()) {
             const personObject = {
                 name: newName,
-                number: newNumber
+                number: newNumber,
+                id: persons.length + 1
             }
             setPersons(persons.concat(personObject))
             setNewName("")
