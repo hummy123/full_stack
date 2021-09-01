@@ -1,10 +1,12 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import TextInput from "./TextInput";
 
 const Filter = ({object: {setFilterPeople, persons}}) => {
     //declare values used for filter input
     const [ textFilter, setTextFilter ] = useState('')
 
+    //when person object changes (because of form)
+    //or when text filter changes, update filter
     useEffect(() => {
         setFilterPeople(persons.filter(person => {
             //store lower case values, so comparison is case-insensitive
@@ -16,7 +18,7 @@ const Filter = ({object: {setFilterPeople, persons}}) => {
                 return person
             else return undefined
         }))
-    }, [textFilter, persons])
+    }, [textFilter, setFilterPeople, persons])
 
     //objects for text input element
     const textObjects = {
