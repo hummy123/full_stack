@@ -10,10 +10,10 @@ const getAll = async () => {
     }
 }
 
-const updatePerson = async (id, updatedPerson) => {
+const updatePerson = async (updatedPerson) => {
     try {
         return (await axios.put(
-            `http://localhost:3001/persons/${id}`,
+            `http://localhost:3001/persons/${updatedPerson.id}`,
             updatedPerson)).data
     } catch (err) {
         console.log(err)

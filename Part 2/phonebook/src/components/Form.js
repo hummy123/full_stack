@@ -26,7 +26,9 @@ const Form = (props) => {
     //add person
     const addPerson = (event) => {
         event.preventDefault()
-        if (!checkExists()) {
+        const person = checkExists()
+
+        if (!person) {
             const personObject = {
                 name: newName,
                 number: newNumber
@@ -36,16 +38,21 @@ const Form = (props) => {
             setNewName("")
             setNewNumber("")
         } else {
-            alert(`${newName} already exists!`)
+            updatePerson(person)
+        }
+    }
+
+    //update person
+    const updatePerson = (person) => {
+        if (window.confirm(`Do you want to update ${newName}'s number?`)) {
+            const newPerson = { ...person, 'number' : newNumber }
+            personService.updatePerson(newPerson)
         }
     }
 
     //check if person already exists (called while adding new)
     const checkExists = () => {
-        if (persons.some(person => person.name === newName))
-            return true
-        else
-            return false
+        return persons.find(person => person.name === newName)
     }
 
     return (
