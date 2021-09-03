@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import TextInput from "./TextInput";
+import personService from '../services/persons'
 
 const Form = (props) => {
     //destructure props
@@ -28,9 +29,9 @@ const Form = (props) => {
         if (!checkExists()) {
             const personObject = {
                 name: newName,
-                number: newNumber,
-                id: persons.length + 1
+                number: newNumber
             }
+            personService.savePerson(personObject)
             setPersons(persons.concat(personObject))
             setNewName("")
             setNewNumber("")
@@ -40,7 +41,7 @@ const Form = (props) => {
     }
 
     //check if person already exists (called while adding new)
-    const checkExists = (event) => {
+    const checkExists = () => {
         if (persons.some(person => person.name === newName))
             return true
         else

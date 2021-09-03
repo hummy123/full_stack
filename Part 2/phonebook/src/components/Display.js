@@ -3,18 +3,12 @@ import Person from "./Person";
 
 const Display = (props) => {
 
-    /* display filtered list:
-        {peopleToShow.map(person =>
-        <Person key={person.name} person={person} />
-        )}
-     */
-
     return (
         <>
             <h2>People</h2>
             <ul>
                 {props.persons.map(person =>
-                    <Person key={person.name} person={person} />
+                    <Person key={person.name} person={person} object={props.object}  />
                 )}
             </ul>
         </>

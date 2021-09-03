@@ -7,6 +7,7 @@ const Filter = ({object: {setFilterPeople, persons}}) => {
 
     //when person object changes (because of form)
     //or when text filter changes, update filter
+
     useEffect(() => {
         setFilterPeople(persons.filter(person => {
             //store lower case values, so comparison is case-insensitive
