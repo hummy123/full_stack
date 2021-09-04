@@ -1,7 +1,7 @@
 import React from "react";
 import personService from "../services/persons";
 
-const Person = ({person, object: {persons, setPersons}}) => {
+const Person = ({person, object: {persons, setPersons, notify}}) => {
 
     const deletePerson = (id) => {
         if (window.confirm(`Are you sure you want to delete ${person.name}?`)) {
@@ -10,6 +10,7 @@ const Person = ({person, object: {persons, setPersons}}) => {
                 return (curPerson.id !== id ? curPerson : undefined)
             })
             setPersons(newPersons)
+            notify(`You have deleted ${person.name}'s contact.`)
         }
     }
 

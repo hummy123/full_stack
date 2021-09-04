@@ -17,7 +17,7 @@ const updatePerson = async (updatedPerson) => {
             updatedPerson)).data
     } catch (err) {
         console.log(err)
-        throw err
+        return false
     }
 }
 
