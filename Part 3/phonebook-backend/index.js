@@ -1,8 +1,16 @@
 const express = require('express')
 const {response} = require("express");
+const morgan = require("morgan");
 const app = express()
 
 app.use(express.json())
+
+//token to get the request body
+morgan.token('body', function (req, res) { return JSON.stringify(req.body) });
+
+/* token for 'tiny' configuration (as stated on docs) with ':body' appended to show request body
+ * not specifying 'tiny' as format because that is incompatible with additional tokens */
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
 
 let contacts = [
     {
