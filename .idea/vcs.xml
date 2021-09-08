@@ -2,5 +2,6 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Part 3/phonebook-fullstack/arcane-reaches-66730" vcs="Git" />
   </component>
 </project>

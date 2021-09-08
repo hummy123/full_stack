@@ -1,0 +1,25 @@
+{
+  "name": "phonebook-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "copyfront": "cd ../frontend/ && npm run build --prod && cp -r build ../arcane-reaches-66730",
+    "copyback": "cd ../backend && cp -r ./ ../arcane-reaches-66730",
+    "deploy": "cd ../arcane-reaches-66730 && git add . && git commit -m $MSG && git push heroku",
+    "deployfull": "npm run copyfront && npm run copyback && npm run deploy"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  }
+}

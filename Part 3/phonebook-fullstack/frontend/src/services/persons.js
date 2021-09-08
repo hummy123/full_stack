@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseLink = 'http://localhost:3001/api/persons'
+const baseLink = '/api/persons'
 
 const getAll = async () => {
     try {
