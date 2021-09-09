@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from "mongoose"
 
 //contact schema and model used for both reading and writing
 const contactSchema = new mongoose.Schema({
@@ -56,4 +56,6 @@ const main = async () => {
     }
 }
 
+const url = process.env.MONGODB_URI
+console.log(url)
 main() //call this function when program starts
