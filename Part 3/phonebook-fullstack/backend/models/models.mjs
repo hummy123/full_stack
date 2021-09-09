@@ -67,6 +67,24 @@ class Models {
     static async close() {
         await mongoose.connection.close()
     }
+
+    static async delete(id) {
+        await this.connect()
+        const result = this.Contact.findByIdAndRemove(id)
+        await this.close()
+        return result
+    }
+
+    static async update(id, number) {
+        await this.connect()
+
+        const result = await this.Contact.findByIdAndUpdate(id,
+            {number: number},
+            {new: true})
+
+        await this.close()
+        return result
+    }
 }
 
 export default Models

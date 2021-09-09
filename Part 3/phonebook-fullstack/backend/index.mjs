@@ -52,24 +52,51 @@ app.post('/api/persons', async (request, response) => {
     response.json(result)
 })
 
-app.get('/api/persons/:id', async (request, response) => {
-    const contact = await Models.find(request.params.id)
-    if (contact)
-        response.json(contact)
-    else
-        response.status(404).end()
+app.get('/api/persons/:id', async (request, response, next) => {
+    try {
+        const contact = await Models.find(request.params.id)
+        if (contact) response.json(contact)
+        else response.status(404).end()
+    } catch (err) {
+        next(err)
+    }
 })
 
-app.delete('/api/persons/:id', (request, response) => {
-    //const id = Number(request.params.id)
-    //contacts = contacts.filter(contact => contact.id !== id)
-    //response.status(204).end()
+app.put('/api/persons/:id', async (request, response) => {
+    const result = await Models.update(
+        request.params.id,
+        request.body.name,
+        request.body.number)
+    response.json(result)
 })
 
-app.get('/info', (request, response) => {
+app.delete('/api/persons/:id', async (request, response) => {
+    await Models.delete(request.params.id)
+    response.status(204).end()
+})
+
+app.get('/info', async (request, response) => {
+    const contacts = await Models.getAll()
     response.send(`<p>Phonebook has entries for ${contacts.length} people.</p>
     <p>${new Date().toString()}</p>`)
 })
+
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
+
+const errorHandler = (error, request, response, next) => {
+    console.error(error.message)
+
+    if (error.name === 'CastError') {
+        return response.status(400).send({ error: 'malformatted id' })
+    }
+
+    next(error)
+}
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT)
