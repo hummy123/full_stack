@@ -11,11 +11,18 @@
     "copyback": "cd ../backend && cp -r ./ ../arcane-reaches-66730",
     "copyfull": "npm run copyfront && npm run copyback",
     "deploy": "cd ../arcane-reaches-66730 && git add . && git commit -m $MSG && git push heroku",
-    "deployfull": "npm run copyfull && npm run deploy"
+    "deployfull": "npm run copyfull && npm run deploy",
+    "lint": "eslint . --ext=mjs,js"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/eslint-parser": "^7.15.4",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-vue": "^7.17.0",
     "nodemon": "^2.0.12"
   },
   "dependencies": {
@@ -23,6 +30,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongoose": "^6.0.5",
+    "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.10.0"
   }
 }
