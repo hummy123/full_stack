@@ -5,15 +5,16 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --verbose"
   },
   "author": "Humza Shahid",
   "license": "MIT",
   "devDependencies": {
     "cors": "^2.8.5",
     "eslint": "^7.32.0",
+    "jest": "^27.2.0",
     "nodemon": "^2.0.12"
   },
   "dependencies": {
