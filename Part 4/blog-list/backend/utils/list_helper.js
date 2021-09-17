@@ -1,5 +1,5 @@
 const dummy = (blogs) => {
-	console.log(blogs)
+	console.log(blogs) //to get rid of eslint warning
 	return 1
 }
 
