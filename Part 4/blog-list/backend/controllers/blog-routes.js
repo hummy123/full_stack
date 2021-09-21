@@ -17,4 +17,15 @@ blogRouter.post('/', async (request, response) => {
 	}
 })
 
+blogRouter.delete('/:id', async (request, response) => {
+	await models.remove(request.params.id)
+	response.status(204).end()
+})
+
+blogRouter.put('/:id', async (request, response) => {
+	const id = request.params.id
+	const result = await models.update(id, request.body)
+	response.json(result)
+})
+
 export default blogRouter

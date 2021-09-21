@@ -7,3 +7,13 @@ Content-Type: application/json
 }
 
 ###
+
+PUT http://localhost:3001/api/blogs/6149c1040a3f26a46dbbb49c
+Content-Type: application/json
+
+{
+  "author": "new author",
+  "likes": 1000
+}
+
+###

@@ -37,9 +37,24 @@ const save = async (request) => {
 	return result
 }
 
+const remove = async (id) => {
+	await connect()
+	const result = await Blog.findByIdAndRemove(id)
+	await close()
+	return result
+}
+
 const deleteAll = async () => {
 	await connect()
 	await Blog.deleteMany({})
+	await close()
+}
+
+const update = async (id, object) => {
+	await connect()
+	const result = await Blog.findByIdAndUpdate(id, object)
+	await close()
+	return result
 }
 
 const connect = async () => {
@@ -54,7 +69,8 @@ const connect = async () => {
 
 //function to close db
 const close = async () => {
+	logger.info('closing db')
 	await mongoose.connection.close()
 }
 
-export default {findAll, save, deleteAll}
+export default {findAll, save, deleteAll, remove, update}
