@@ -1,12 +1,12 @@
 //token to get the request body
-import morgan from 'morgan'
 import logger from './logger.js'
 
-morgan.token('body', function (req) { return JSON.stringify(req.body) })
-
-const morganLogger = () => {
-	morgan.token('body', function (req) { return JSON.stringify(req.body) })
-	return morgan(':method :url :status :res[content-length] - :response-time ms :body')
+const requestLogger = (request, response, next) => {
+	logger.info('Method:', request.method)
+	logger.info('Path:  ', request.path)
+	logger.info('Body:  ', request.body)
+	logger.info('---')
+	next()
 }
 
 const unknownEndpoint = (request, response) => {
@@ -25,7 +25,7 @@ const errorHandler = (error, request, response, next) => {
 }
 
 export default {
-	morganLogger,
+	requestLogger,
 	unknownEndpoint,
 	errorHandler
 }

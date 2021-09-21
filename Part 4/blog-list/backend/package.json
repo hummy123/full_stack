@@ -5,22 +5,25 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "node --experimental-vm-modules node_modules/.bin/jest --verbose"
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=production nodemon index.js",
+    "test": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/.bin/jest --verbose --runInBand"
   },
   "author": "Humza Shahid",
   "license": "MIT",
   "devDependencies": {
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
     "jest": "^27.2.0",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "supertest": "^6.1.6"
   },
   "dependencies": {
     "@babel/eslint-parser": "^7.15.4",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
     "lodash": "^4.17.21",
     "mongoose": "^6.0.5"
   }

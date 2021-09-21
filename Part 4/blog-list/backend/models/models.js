@@ -3,10 +3,18 @@ import {MONGODB_URI} from '../utils/config.js'
 import logger from '../utils/logger.js'
 
 const blogSchema = new mongoose.Schema({
-	title: String,
+	title: {type: String, required: true},
 	author: String,
-	url: String,
-	likes: Number
+	url: {type: String, required: true},
+	likes: {type: Number, default: 0}
+})
+
+blogSchema.set('toJSON', {
+	transform: (document, returnedObject) => {
+		returnedObject.id = returnedObject._id.toString()
+		delete returnedObject._id
+		delete returnedObject.__v
+	}
 })
 
 const Blog = mongoose.model('Blog', blogSchema)
@@ -29,6 +37,11 @@ const save = async (request) => {
 	return result
 }
 
+const deleteAll = async () => {
+	await connect()
+	await Blog.deleteMany({})
+}
+
 const connect = async () => {
 	//connect to db
 	try {
@@ -44,4 +57,4 @@ const close = async () => {
 	await mongoose.connection.close()
 }
 
-export default {findAll, save}
+export default {findAll, save, deleteAll}
