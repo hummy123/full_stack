@@ -53,11 +53,19 @@ const deleteAll = async () => {
 	return result
 }
 
+const findByUsername = async (username) => {
+	await connection.connect()
+	const result = await User.findOne({username: username})
+	await connection.close()
+	return result
+}
+
 const linkBlogToUser = async (userID, blogID) => {
 	await connection.connect()
 	let curUser = await User.findById(userID)
 	curUser.blogs = curUser.blogs.concat(blogID)
 	await curUser.save()
+	await connection.close()
 }
 
-export default {newUser, allUsers, deleteAll, linkBlogToUser}
+export default {newUser, allUsers, deleteAll, linkBlogToUser, findByUsername}
