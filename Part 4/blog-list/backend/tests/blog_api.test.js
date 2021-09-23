@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import supertest from 'supertest'
 import app from '../app'
-import models from '../models/models.js'
+import models from '../models/blogs.js'
 
 const initialBlogs = [
 	{

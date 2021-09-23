@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
-import {MONGODB_URI} from '../utils/config.js'
-import logger from '../utils/logger.js'
+import connection from './common.js'
 
 const blogSchema = new mongoose.Schema({
 	title: {type: String, required: true},
@@ -20,9 +19,9 @@ blogSchema.set('toJSON', {
 const Blog = mongoose.model('Blog', blogSchema)
 
 const findAll = async () => {
-	await connect()
+	await connection.connect()
 	const result = await Blog.find()
-	await close()
+	await connection.close()
 	return result
 }
 
@@ -31,46 +30,30 @@ const save = async (request) => {
 	const blog = new Blog(request)
 
 	//connect to db, save and close connection
-	await connect()
+	await connection.connect()
 	const result = await blog.save()
-	await close()
+	await connection.close()
 	return result
 }
 
 const remove = async (id) => {
-	await connect()
+	await connection.connect()
 	const result = await Blog.findByIdAndRemove(id)
-	await close()
+	await connection.close()
 	return result
 }
 
 const deleteAll = async () => {
-	await connect()
+	await connection.connect()
 	await Blog.deleteMany({})
-	await close()
+	await connection.close()
 }
 
 const update = async (id, object) => {
-	await connect()
+	await connection.connect()
 	const result = await Blog.findByIdAndUpdate(id, object)
-	await close()
+	await connection.close()
 	return result
-}
-
-const connect = async () => {
-	//connect to db
-	try {
-		await mongoose.connect(`${MONGODB_URI}`)
-		logger.info('connected to db')
-	} catch (err) {
-		logger.error('error connecting to db:', err.message)
-	}
-}
-
-//function to close db
-const close = async () => {
-	logger.info('closing db')
-	await mongoose.connection.close()
 }
 
 export default {findAll, save, deleteAll, remove, update}
