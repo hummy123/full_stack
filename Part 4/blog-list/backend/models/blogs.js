@@ -1,11 +1,13 @@
 import mongoose from 'mongoose'
 import connection from './common.js'
+import users from './users.js'
 
 const blogSchema = new mongoose.Schema({
 	title: {type: String, required: true},
 	author: String,
 	url: {type: String, required: true},
-	likes: {type: Number, default: 0}
+	likes: {type: Number, default: 0},
+	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 })
 
 blogSchema.set('toJSON', {
@@ -20,18 +22,22 @@ const Blog = mongoose.model('Blog', blogSchema)
 
 const findAll = async () => {
 	await connection.connect()
-	const result = await Blog.find()
+	const result = await Blog.find().populate('creator')
 	await connection.close()
 	return result
 }
 
 const save = async (request) => {
+	const usersInDB = await users.allUsers()
+	request.creator = usersInDB[0]
+
 	//convert request to Blog schema
 	const blog = new Blog(request)
 
 	//connect to db, save and close connection
 	await connection.connect()
 	const result = await blog.save()
+	await users.linkBlogToUser(usersInDB[0].id, result.id)
 	await connection.close()
 	return result
 }
@@ -56,4 +62,11 @@ const update = async (id, object) => {
 	return result
 }
 
-export default {findAll, save, deleteAll, remove, update}
+const findOne = async (id) => {
+	await connection.connect()
+	const result = await Blog.findById(id)
+	await connection.close()
+	return result
+}
+
+export default {findAll, save, deleteAll, remove, update, findOne}

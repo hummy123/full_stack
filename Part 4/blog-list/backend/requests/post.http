@@ -2,7 +2,9 @@ POST http://localhost:3001/api/blogs
 Content-Type: application/json
 
 {
-  "author": "by stranger",
+  "title": "last",
+  "author": "lastblog",
+  "url": "google.com",
   "likes": 0
 }
 
