@@ -11,6 +11,7 @@ const app = express()
 //middleware
 app.use(cors())
 app.use(express.json())
+app.use(middleware.tokenExtractor)
 
 //routes
 app.use('/api/blogs', blogRouter)

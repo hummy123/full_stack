@@ -1,10 +1,11 @@
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ5IHN0cmFuZ2VyIiwiaWQiOiI2MTRjZjI0M2MwM2ZkMDMzYzZhZGY0ZDQiLCJpYXQiOjE2MzI0Njg2NjF9.AebQfie-cMDxRuCTk-g3SASc9XH78k7SgVUgKwIM8ic
 
 {
-  "title": "last",
-  "author": "lastblog",
-  "url": "google.com",
+  "title": "after",
+  "author": "after",
+  "url": "after.com",
   "likes": 0
 }
 
@@ -30,13 +31,11 @@ Content-Type: application/json
 }
 
 ###
-
 POST http://localhost:3001/api/login
 Content-Type: application/json
 
 {
   "username": "by stranger",
+  "name": "hiasdf",
   "password": "ihsowieof"
 }
-
-###

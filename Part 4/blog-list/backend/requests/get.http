@@ -2,3 +2,6 @@ GET http://localhost:3001/api/blogs
 Accept: application/json
 
 ###
+
+DELETE http://localhost:3001/api/blogs/614d8e1eabf3f6b6ef528762
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJ5IHN0cmFuZ2VyIiwiaWQiOiI2MTRjZjI0M2MwM2ZkMDMzYzZhZGY0ZDQiLCJpYXQiOjE2MzI0Njg2NjF9.AebQfie-cMDxRuCTk-g3SASc9XH78k7SgVUgKwIM8ic

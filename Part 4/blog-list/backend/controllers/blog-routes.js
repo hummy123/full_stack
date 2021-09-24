@@ -1,5 +1,6 @@
 import models from '../models/blogs.js'
 import {Router} from 'express'
+import {userExtractor} from '../utils/middleware.js'
 
 const blogRouter = Router()
 
@@ -8,7 +9,7 @@ blogRouter.get('/', async (request, response) => {
 	response.json(result)
 })
 
-blogRouter.post('/', async (request, response) => {
+blogRouter.post('/', userExtractor, async (request, response) => {
 	try {
 		const result = await models.save(request.body)
 		response.status(201).json(result)
@@ -17,8 +18,9 @@ blogRouter.post('/', async (request, response) => {
 	}
 })
 
-blogRouter.delete('/:id', async (request, response) => {
-	await models.remove(request.params.id)
+blogRouter.delete('/:id', userExtractor, async (request, response) => {
+	const result = await models.remove(request.params.id, request.body.user)
+	if (!result) response.status(401).json({error: 'unauthorised'})
 	response.status(204).end()
 })
 

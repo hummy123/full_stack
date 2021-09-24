@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
 import connection from './common.js'
-import users from './users.js'
 
 const blogSchema = new mongoose.Schema({
 	title: {type: String, required: true},
@@ -28,25 +27,29 @@ const findAll = async () => {
 }
 
 const save = async (request) => {
-	const usersInDB = await users.allUsers()
-	request.creator = usersInDB[0]
-
 	//convert request to Blog schema
 	const blog = new Blog(request)
 
 	//connect to db, save and close connection
 	await connection.connect()
 	const result = await blog.save()
-	await users.linkBlogToUser(usersInDB[0].id, result.id)
+	await connection.linkBlogAndoUser(request.user, result.id)
 	await connection.close()
 	return result
 }
 
-const remove = async (id) => {
+const remove = async (blogID, userID) => {
 	await connection.connect()
-	const result = await Blog.findByIdAndRemove(id)
-	await connection.close()
-	return result
+
+	const curBlog = await Blog.findById(blogID)
+	if (curBlog.creator.toString() === userID.toString()) {
+		const result = await Blog.findByIdAndRemove(blogID)
+		await connection.close()
+		return result
+	} else {
+		await connection.close()
+		return false
+	}
 }
 
 const deleteAll = async () => {

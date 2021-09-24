@@ -39,6 +39,10 @@ const newUser = async (request) => {
 	return result
 }
 
+const updateUser = async (user) => {
+	return User.findByIdAndUpdate(user.id, user)
+}
+
 const allUsers = async () => {
 	await connection.connect()
 	const result = await User.find({}).populate('blogs')
@@ -53,6 +57,13 @@ const deleteAll = async () => {
 	return result
 }
 
+const findById = async (id) => {
+	await connection.connect()
+	const result = await User.findById(id)
+	await connection.close()
+	return result
+}
+
 const findByUsername = async (username) => {
 	await connection.connect()
 	const result = await User.findOne({username: username})
@@ -60,12 +71,4 @@ const findByUsername = async (username) => {
 	return result
 }
 
-const linkBlogToUser = async (userID, blogID) => {
-	await connection.connect()
-	let curUser = await User.findById(userID)
-	curUser.blogs = curUser.blogs.concat(blogID)
-	await curUser.save()
-	await connection.close()
-}
-
-export default {newUser, allUsers, deleteAll, linkBlogToUser, findByUsername}
+export default {newUser, allUsers, deleteAll, findByUsername, findById, updateUser}
