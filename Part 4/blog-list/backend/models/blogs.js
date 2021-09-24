@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import connection from './common.js'
+import common from './common.js'
 
 const blogSchema = new mongoose.Schema({
 	title: {type: String, required: true},
@@ -20,56 +20,37 @@ blogSchema.set('toJSON', {
 const Blog = mongoose.model('Blog', blogSchema)
 
 const findAll = async () => {
-	await connection.connect()
-	const result = await Blog.find().populate('creator')
-	await connection.close()
-	return result
+	return Blog.find().populate('creator')
 }
 
 const save = async (request) => {
 	//convert request to Blog schema
 	const blog = new Blog(request)
 
-	//connect to db, save and close connection
-	await connection.connect()
 	const result = await blog.save()
-	await connection.linkBlogAndoUser(request.user, result.id)
-	await connection.close()
+	await common.linkBlogAndUser(request.user, result.id)
 	return result
 }
 
 const remove = async (blogID, userID) => {
-	await connection.connect()
-
 	const curBlog = await Blog.findById(blogID)
 	if (curBlog.creator.toString() === userID.toString()) {
-		const result = await Blog.findByIdAndRemove(blogID)
-		await connection.close()
-		return result
+		return Blog.findByIdAndRemove(blogID)
 	} else {
-		await connection.close()
 		return false
 	}
 }
 
 const deleteAll = async () => {
-	await connection.connect()
-	await Blog.deleteMany({})
-	await connection.close()
+	return Blog.deleteMany({})
 }
 
 const update = async (id, object) => {
-	await connection.connect()
-	const result = await Blog.findByIdAndUpdate(id, object)
-	await connection.close()
-	return result
+	return Blog.findByIdAndUpdate(id, object)
 }
 
 const findOne = async (id) => {
-	await connection.connect()
-	const result = await Blog.findById(id)
-	await connection.close()
-	return result
+	return Blog.findById(id)
 }
 
 export default {findAll, save, deleteAll, remove, update, findOne}

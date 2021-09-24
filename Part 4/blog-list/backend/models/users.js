@@ -1,7 +1,6 @@
 import mongoose from 'mongoose'
 import uniqueValidator from 'mongoose-unique-validator'
 import bcrypt from 'bcrypt'
-import connection from './common.js'
 
 const userSchema = new mongoose.Schema({
 	username: {required: true, unique: true, type: String, minlength: 3},
@@ -33,10 +32,7 @@ const newUser = async (request) => {
 		password: passwordHash
 	})
 
-	await connection.connect()
-	const result = await user.save()
-	await connection.close()
-	return result
+	return user.save()
 }
 
 const updateUser = async (user) => {
@@ -44,31 +40,19 @@ const updateUser = async (user) => {
 }
 
 const allUsers = async () => {
-	await connection.connect()
-	const result = await User.find({}).populate('blogs')
-	await connection.close()
-	return result
+	return User.find({}).populate('blogs')
 }
 
 const deleteAll = async () => {
-	await connection.connect()
-	const result = await User.deleteMany({})
-	await connection.close()
-	return result
+	return User.deleteMany({})
 }
 
 const findById = async (id) => {
-	await connection.connect()
-	const result = await User.findById(id)
-	await connection.close()
-	return result
+	return User.findById(id)
 }
 
 const findByUsername = async (username) => {
-	await connection.connect()
-	const result = await User.findOne({username: username})
-	await connection.close()
-	return result
+	return User.findOne({username: username})
 }
 
 export default {newUser, allUsers, deleteAll, findByUsername, findById, updateUser}

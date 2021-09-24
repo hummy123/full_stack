@@ -20,21 +20,16 @@ const connect = async () => {
 	}
 }
 
-const linkBloAndoUser = async (userID, blogID) => {
-	await connect()
-
+const linkBloAndUser = async (userID, blogID) => {
 	//find user and add blog to user objeect
 	let curUser = await users.findById(userID)
 	curUser.blogs = curUser.blogs.concat(blogID)
-	await connect()
 	await users.updateUser(curUser)
 
 	//find blog and save user to blog object
 	const curBlog = await blogs.findOne(blogID)
 	curBlog.creator = userID
 	await blogs.update(blogID, curBlog)
-
-	//await close()
 }
 
-export default {connect, close, linkBlogAndoUser: linkBloAndoUser}
+export default {connect, close, linkBlogAndUser: linkBloAndUser}

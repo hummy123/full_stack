@@ -46,6 +46,7 @@ export const userExtractor = async (request, response, next) => {
 	next()
 }
 
+
 export default {
 	requestLogger,
 	unknownEndpoint,

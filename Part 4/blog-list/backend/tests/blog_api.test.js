@@ -1,4 +1,3 @@
-import mongoose from 'mongoose'
 import supertest from 'supertest'
 import app from '../app'
 import models from '../models/blogs.js'
@@ -38,10 +37,6 @@ beforeEach(async () => {
 		blog.user = user[0].id.toString()
 		await models.save(blog)
 	}
-})
-
-afterAll(() => {
-	mongoose.connection.close()
 })
 
 describe('test fetching from API', () => {
