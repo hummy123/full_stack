@@ -78,7 +78,7 @@ describe('test user creation', () => {
 			.expect(400)
 			.expect('Content-Type', /application\/json/)
 
-		expect(result.body.error).toContain('ValidationError')
+		expect(result.body.error).toBe('password must contain at least 3 characters')
 	})
 
 	test('invalid when username is duplicate', async () => {

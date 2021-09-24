@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import supertest from 'supertest'
 import app from '../app'
 import models from '../models/blogs.js'
+import users from '../models/users'
 
 const initialBlogs = [
 	{
@@ -32,8 +33,11 @@ const api = supertest(app)
 beforeEach(async () => {
 	//reset database state before each test
 	await models.deleteAll()
-	for (const blog of initialBlogs)
+	const user = await users.allUsers()
+	for (const blog of initialBlogs) {
+		blog.user = user[0].id.toString()
 		await models.save(blog)
+	}
 })
 
 afterAll(() => {
@@ -72,8 +76,12 @@ describe('test posting to API', () => {
 	test('posting increments blog number increment by 1', async () => {
 		//get number of blogs at start
 		const initial = await api.get('/api/blogs')
+
+		//get user for blog
+		const user = await users.allUsers()
+
 		//save a new object
-		await models.save(newBlog)
+		await models.save({...newBlog, user: user[0].id.toString()})
 		//get number of blogs again (which should be previous + 1
 		const final = await api.get('/api/blogs')
 		//compare initial and final
@@ -81,8 +89,10 @@ describe('test posting to API', () => {
 	})
 
 	test('saved object can be found on db', async () => {
-		//save object to db and response in variable
-		const response = await models.save(newBlog)
+		//get user for blog
+		const user = await users.allUsers()
+		//save a new object
+		const response = await models.save({...newBlog, user: user[0].id.toString()})
 
 		/* response should be equal to object.
 		 * checking individual properties because response
@@ -94,20 +104,28 @@ describe('test posting to API', () => {
 	})
 
 	test('default likes to 0 if no likes in object', async () => {
+		//get user for blog
+		const user = await users.allUsers()
+
 		//object with no 'likes' property
 		const tempBlog = {
 			'title': 'test title',
 			'author': 'test author',
-			'url': 'test url'
+			'url': 'test url',
+			user: user[0].id.toString()
 		}
 		const response = await models.save(tempBlog)
 		expect(response.likes).toBe(0)
 	})
 
 	test('respond with code 400 if title and url missing', async () => {
+		//get user for blog
+		const user = await users.allUsers()
+
 		const malformedBlog = {
 			'author': 'test author',
-			'likes': 0
+			'likes': 0,
+			user: user[0].id.toString()
 		}
 		await api
 			.post('/api/blogs')

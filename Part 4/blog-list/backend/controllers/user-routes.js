@@ -9,6 +9,9 @@ userRouter.get('/', async (request, response) => {
 })
 
 userRouter.post('/', async (request, response) => {
+	if (request.body.password.length < 3)
+		return response.status(400).json({error: 'password must contain at least 3 characters'})
+
 	try {
 		const result = await models.newUser(request.body)
 		response.json(result)
