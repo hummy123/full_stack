@@ -24,6 +24,9 @@ const findAll = async () => {
 }
 
 const save = async (request) => {
+	if (!request.user)
+		throw new Error('not logged in')
+
 	//convert request to Blog schema
 	const blog = new Blog(request)
 
@@ -34,11 +37,13 @@ const save = async (request) => {
 
 const remove = async (blogID, userID) => {
 	const curBlog = await Blog.findById(blogID)
-	if (curBlog.creator.toString() === userID.toString()) {
-		return Blog.findByIdAndRemove(blogID)
-	} else {
-		return false
-	}
+	await checkUser(curBlog.creator.toString(), userID)
+	return Blog.findByIdAndRemove(blogID)
+}
+
+const checkUser = async (creatorID, userID) => {
+	if (creatorID !== userID.toString())
+		throw new Error('unauthorised')
 }
 
 const deleteAll = async () => {
@@ -46,6 +51,12 @@ const deleteAll = async () => {
 }
 
 const update = async (id, object) => {
+	const curBlog = await Blog.findById(id)
+	await checkUser(curBlog.creator.toString(), object.user)
+	return Blog.findByIdAndUpdate(id, object)
+}
+
+const addLink = async (id, object) => {
 	return Blog.findByIdAndUpdate(id, object)
 }
 
@@ -53,4 +64,4 @@ const findOne = async (id) => {
 	return Blog.findById(id)
 }
 
-export default {findAll, save, deleteAll, remove, update, findOne}
+export default {findAll, save, deleteAll, remove, update, findOne, addLink}

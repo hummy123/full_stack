@@ -28,8 +28,8 @@ const linkBloAndUser = async (userID, blogID) => {
 
 	//find blog and save user to blog object
 	const curBlog = await blogs.findOne(blogID)
-	curBlog.creator = userID
-	await blogs.update(blogID, curBlog)
+	curBlog.user = userID
+	await blogs.addLink(blogID, curBlog)
 }
 
 export default {connect, close, linkBlogAndUser: linkBloAndUser}
