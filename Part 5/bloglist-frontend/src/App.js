@@ -6,48 +6,48 @@ import Blogs from "./components/Blogs";
 import Notification from "./components/Notification";
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+    const [blogs, setBlogs] = useState([])
     const [user, setUser] = useState(null)
-  const [notification, setNotification] = useState(null)
+    const [notification, setNotification] = useState(null)
 
-  useEffect(() => {
-    getBlogs()
-    checkLogin()
-  }, [])
+    useEffect(() => {
+        getBlogs()
+        checkLogin()
+    }, [])
 
-  const getBlogs = () => {
-    blogService.getAll().then(blogs =>
-        setBlogs( blogs )
-    )
-  }
-
-  const checkLogin = () => {
-    const loggedInUser = window.localStorage.getItem('credentials')
-    if (loggedInUser) {
-      const user = JSON.parse(loggedInUser)
-      setUser(user)
+    const getBlogs = () => {
+        blogService.getAll().then(blogs =>
+            setBlogs( blogs )
+        )
     }
-  }
 
-  return (
-    <>
-      {notification && <Notification
-          message={notification}
-          setNotification={setNotification}
-      />}
+    const checkLogin = () => {
+        const loggedInUser = window.localStorage.getItem('credentials')
+        if (loggedInUser) {
+            const user = JSON.parse(loggedInUser)
+            setUser(user)
+        }
+    }
 
-      {user === null
-          ? <LoginForm
-              setUser={setUser}
-              setNotification={setNotification}
-          />
-          : <Blogs name={user.name}
-                   blogs={blogs}
-                   setUser={setUser}
-                   setNotification={setNotification}
-          />}
-    </>
-  )
+    return (
+        <>
+            {notification && <Notification
+                message={notification}
+                setNotification={setNotification}
+            />}
+
+            {user === null
+                ? <LoginForm
+                    setUser={setUser}
+                    setNotification={setNotification}
+                />
+                : <Blogs name={user.name}
+                         blogs={blogs}
+                         setUser={setUser}
+                         setNotification={setNotification}
+                />}
+        </>
+    )
 }
 
 export default App

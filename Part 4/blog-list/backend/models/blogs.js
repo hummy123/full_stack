@@ -36,8 +36,8 @@ const save = async (request) => {
 }
 
 const remove = async (blogID, userID) => {
-	const curBlog = await Blog.findById(blogID)
-	await checkUser(curBlog.creator.toString(), userID)
+	//const curBlog = await Blog.findById(blogID)
+	//await checkUser(curBlog.creator.toString(), userID)
 	return Blog.findByIdAndRemove(blogID)
 }
 
@@ -51,8 +51,8 @@ const deleteAll = async () => {
 }
 
 const update = async (id, object) => {
-	const curBlog = await Blog.findById(id)
-	await checkUser(curBlog.creator.toString(), object.user)
+	//const curBlog = await Blog.findById(id)
+	//await checkUser(curBlog.creator.toString(), object.user)
 	return Blog.findByIdAndUpdate(id, object)
 }
 

@@ -32,6 +32,7 @@ blogRouter.delete('/:id', userExtractor, async (request, response) => {
 
 blogRouter.put('/:id', userExtractor, async (request, response) => {
 	const id = request.params.id
+	console.log(request.body)
 	try {
 		const result = await models.update(id, request.body)
 		response.json(result)
