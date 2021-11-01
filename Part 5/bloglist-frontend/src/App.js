@@ -1,9 +1,9 @@
 import './index.css'
 import React, { useState, useEffect } from 'react'
 import blogService from './services/blogs'
-import LoginForm from "./components/LoginForm";
-import Blogs from "./components/Blogs";
-import Notification from "./components/Notification";
+import LoginForm from './components/LoginForm'
+import Blogs from './components/Blogs'
+import Notification from './components/Notification'
 
 const App = () => {
     const [blogs, setBlogs] = useState([])
@@ -42,9 +42,9 @@ const App = () => {
                     setNotification={setNotification}
                 />
                 : <Blogs name={user.name}
-                         blogs={blogs}
-                         setUser={setUser}
-                         setNotification={setNotification}
+                    blogs={blogs}
+                    setUser={setUser}
+                    setNotification={setNotification}
                 />}
         </>
     )

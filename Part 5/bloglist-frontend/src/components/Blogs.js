@@ -1,15 +1,15 @@
-import Blog from "./Blog";
-import React from "react";
-import BlogForm from "./BlogForm";
-import Togglable from "./Togglable";
+import Blog from './Blog'
+import React from 'react'
+import BlogForm from './BlogForm'
+import Togglable from './Togglable'
 
-const Blogs = ({blogs, name, setUser, setNotification}) => {
+const Blogs = ({ blogs, name, setUser, setNotification }) => {
     const logoutHandler = () => {
         window.localStorage.removeItem('credentials')
         setUser(null)
     }
 
-    const sortedBlogs = blogs.sort(
+    blogs.sort(
         (a, b) => {
             return a.likes + b.likes
         }

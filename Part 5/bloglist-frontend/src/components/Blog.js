@@ -1,67 +1,74 @@
-import React, {useState} from 'react'
-import blogs from "../services/blogs";
-const Blog = ({blog, setNotification}) => {
-  const [showDetails, setShowDetails] = useState(false)
+import React, { useState } from 'react'
+import blogs from '../services/blogs'
+import PropTypes from 'prop-types'
 
-  const toggleDetails = () => {
-    setShowDetails(!showDetails)
-  }
+const Blog = ({ blog, setNotification }) => {
+    const [showDetails, setShowDetails] = useState(false)
 
-  const styles = {
-      border: "1px solid black",
-      width: "fit-content"
-  }
+    const toggleDetails = () => {
+        setShowDetails(!showDetails)
+    }
 
-  const addLike = async () => {
-      try {
-          const result = await blogs.likeBlog(blog)
-          setNotification(`liked blog ${result.title}`)
-      } catch (err) {
-          setNotification(err.message)
-      }
-  }
+    const styles = {
+        border: '1px solid black',
+        width: 'fit-content'
+    }
 
-  const deleteBlog = async () => {
-      if (window.confirm(`Are you sure you want to delete ${blog.title} by ${blog.author}?`)) {
-          try {
-              await blogs.deleteBlog(blog)
-              setNotification(`Deleted blog ${blog.title}`)
-          } catch (err) {
-              setNotification(err.message)
-          }
-      }
-  }
+    const addLike = async () => {
+        try {
+            const result = await blogs.likeBlog(blog)
+            setNotification(`liked blog ${result.title}`)
+        } catch (err) {
+            setNotification(err.message)
+        }
+    }
 
-  if (!showDetails)
-    return (
-        <div style={styles}>
-          {blog.title}
-          <button onClick={toggleDetails}>
+    const deleteBlog = async () => {
+        if (window.confirm(`Are you sure you want to delete ${blog.title} by ${blog.author}?`)) {
+            try {
+                await blogs.deleteBlog(blog)
+                setNotification(`Deleted blog ${blog.title}`)
+            } catch (err) {
+                setNotification(err.message)
+            }
+        }
+    }
+
+    if (!showDetails)
+        return (
+            <div style={styles}>
+                {blog.title}
+                <button onClick={toggleDetails}>
             view
-          </button>
-        </div>
-    )
-  else
-    return (
-        <div style={styles}>
-          <div>
-            title: {blog.title}
-              <button onClick={toggleDetails}>hide</button>
-          </div>
-          <div>
-            by: {blog.author}
-          </div>
-          <div>
-              likes: {blog.likes} <button onClick={addLike}>like</button>
-          </div>
-            <div>
-                url: {blog.url}
+                </button>
             </div>
-            <button onClick={deleteBlog}>
+        )
+    else
+        return (
+            <div style={styles}>
+                <div>
+            title: {blog.title}
+                    <button onClick={toggleDetails}>hide</button>
+                </div>
+                <div>
+            by: {blog.author}
+                </div>
+                <div>
+              likes: {blog.likes} <button onClick={addLike}>like</button>
+                </div>
+                <div>
+                url: {blog.url}
+                </div>
+                <button onClick={deleteBlog}>
                 Delete
-            </button>
-        </div>
-    )
+                </button>
+            </div>
+        )
+}
+
+Blog.propTypes = {
+    blog: PropTypes.object.isRequired,
+    setNotification: PropTypes.func.isRequired
 }
 
 export default Blog
