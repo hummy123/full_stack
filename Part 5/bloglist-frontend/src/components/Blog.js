@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import blogs from '../services/blogs'
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog, setNotification }) => {
+const Blog = ({ blog, setNotification, mockHandler }) => {
     const [showDetails, setShowDetails] = useState(false)
 
     const toggleDetails = () => {
@@ -15,6 +15,7 @@ const Blog = ({ blog, setNotification }) => {
     }
 
     const addLike = async () => {
+        //update local blog object
         try {
             const result = await blogs.likeBlog(blog)
             setNotification(`liked blog ${result.title}`)
@@ -36,16 +37,16 @@ const Blog = ({ blog, setNotification }) => {
 
     if (!showDetails)
         return (
-            <div style={styles}>
-                {blog.title}
-                <button onClick={toggleDetails}>
+            <div style={styles} className="simple">
+                {blog.title} {blog.author}
+                <button id="button" onClick={toggleDetails}>
             view
                 </button>
             </div>
         )
     else
         return (
-            <div style={styles}>
+            <div className="detailed" style={styles}>
                 <div>
             title: {blog.title}
                     <button onClick={toggleDetails}>hide</button>
@@ -56,11 +57,14 @@ const Blog = ({ blog, setNotification }) => {
                 <div>
               likes: {blog.likes} <button onClick={addLike}>like</button>
                 </div>
-                <div>
+                <div className="url">
                 url: {blog.url}
                 </div>
                 <button onClick={deleteBlog}>
                 Delete
+                </button>
+                <button className="mock" onClick={mockHandler}>
+                    mock button
                 </button>
             </div>
         )

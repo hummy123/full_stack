@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import blogs from '../services/blogs.js'
 
-const BlogForm = ({ setNotification }) => {
+const BlogForm = ({ setNotification, mockSubmitter }) => {
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [url, setUrl] = useState('')
@@ -19,10 +19,11 @@ const BlogForm = ({ setNotification }) => {
     return (
         <>
             <h2>Add new blog</h2>
-            <form onSubmit={newBlog}>
+            <form onSubmit={mockSubmitter || newBlog}>
                 <div>
                     <label>Title</label>
                     <input
+                        id="title"
                         type={'text'}
                         value={title}
                         name={'title'}
@@ -32,6 +33,7 @@ const BlogForm = ({ setNotification }) => {
                 <div>
                     <label>Author</label>
                     <input
+                        id="author"
                         type={'text'}
                         value={author}
                         name={'author'}
@@ -41,13 +43,16 @@ const BlogForm = ({ setNotification }) => {
                 <div>
                     <label>url</label>
                     <input
+                        id="url"
                         type={'text'}
                         value={url}
                         name={'url'}
                         onChange={({ target }) => setUrl(target.value)}
                     />
                 </div>
-                <button type={'submit'}>Add blog</button>
+                <button
+                    id="submitButton"
+                    type={'submit'}>Add blog</button>
             </form>
         </>
     )

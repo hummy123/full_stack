@@ -10,16 +10,19 @@ const App = () => {
     const [user, setUser] = useState(null)
     const [notification, setNotification] = useState(null)
 
-    useEffect(() => {
-        getBlogs()
+    useEffect(async () => {
+        await getBlogs()
         checkLogin()
     }, [])
 
-    const getBlogs = () => {
-        blogService.getAll().then(blogs =>
-            setBlogs( blogs )
-        )
+    const getBlogs = async () => {
+        const allBlogs = await blogService.getAll()
+        setBlogs(allBlogs)
     }
+
+    useEffect(async () => {
+        await getBlogs()
+    }, [notification, setNotification])
 
     const checkLogin = () => {
         const loggedInUser = window.localStorage.getItem('credentials')
@@ -45,6 +48,7 @@ const App = () => {
                     blogs={blogs}
                     setUser={setUser}
                     setNotification={setNotification}
+                    setBlogs={setBlogs}
                 />}
         </>
     )

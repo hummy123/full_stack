@@ -4,7 +4,7 @@ const Notification = ({ message, setNotification }) => {
 
     setTimeout(() => {
         setNotification(null)
-    }, 5000)
+    }, 3000)
 
     return (
         <div className="error">

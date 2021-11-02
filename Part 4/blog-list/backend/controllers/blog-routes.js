@@ -11,6 +11,7 @@ blogRouter.get('/', async (request, response) => {
 })
 
 blogRouter.post('/', userExtractor, async (request, response) => {
+	console.log(request.body)
 	try {
 		const result = await models.save(request.body)
 		response.status(201).json(result)
