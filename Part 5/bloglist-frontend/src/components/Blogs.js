@@ -11,9 +11,10 @@ const Blogs = ({ blogs, name, setUser, setNotification }) => {
 
     blogs.sort(
         (a, b) => {
-            return a.likes + b.likes
+            return b.likes - a.likes
         }
     )
+
 
     return(
         <>

@@ -54,7 +54,7 @@ const Blog = ({ blog, setNotification, mockHandler }) => {
                 <div>
             by: {blog.author}
                 </div>
-                <div>
+                <div className="likeDiv">
               likes: {blog.likes} <button onClick={addLike}>like</button>
                 </div>
                 <div className="url">
