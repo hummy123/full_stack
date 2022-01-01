@@ -4,13 +4,15 @@ import { vote } from '../reducers/anecdoteReducer'
 import { notify } from '../reducers/notificationReducer'
 
 const AnecdoteList = () => {
-  const anecdotes = useSelector(state => state.anecdotes)
+  const state = useSelector(state => ({anecdotes: state.anecdotes, filter: state.filter}))
   const dispatch = useDispatch()
 
   const dispatchVote = (id, anecdote) => {
     dispatch(vote(id))
     dispatch(notify(`You voted ${anecdote}`))
   }
+
+  const anecdotes = state.anecdotes.filter(anecdote => anecdote.content.includes(state.filter))
 
   return (
     <>
