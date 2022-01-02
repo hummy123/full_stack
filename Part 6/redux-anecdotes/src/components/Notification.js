@@ -8,8 +8,6 @@ const Notification = () => {
   const message = notification.message
   const open = notification.open
 
-  console.log(notification)
-
   //styles to use
   const openStyle = {
     border: 'solid',

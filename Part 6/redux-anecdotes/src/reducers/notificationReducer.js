@@ -4,9 +4,6 @@ const initial = {
 }
 
 const reducer = (state = initial, action) => {
-    console.log('state now: ', state)
-    console.log('action', action)
-
     switch (action.type) {
         case 'NOTIFY':
             return {message: action.message, open: true}
