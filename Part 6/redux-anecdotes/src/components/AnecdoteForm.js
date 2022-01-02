@@ -10,8 +10,7 @@ const AnecdoteForm = () => {
   const dispatchAnecdote = async (event) => {
     event.preventDefault()
     const anecdote = event.target.anecdote.value
-    const anecdoteObject = await postAnecdote(anecdote)
-    dispatch(add(anecdoteObject))
+    dispatch(add(anecdote))
     dispatch(notify(`You addeed ${anecdote}`))
   }
 

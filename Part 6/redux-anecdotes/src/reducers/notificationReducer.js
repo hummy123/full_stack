@@ -14,7 +14,13 @@ const reducer = (state = initial, action) => {
     }
 }
 
-export const notify = (message) => ({type: 'NOTIFY', message: message})
-export const close = () => ({type: 'CLOSE'})
+const close = () => ({type: 'CLOSE'})
+
+export const notify = (message, timeout=1) => {
+    return (dispatch) => {
+        dispatch({type: 'NOTIFY', message: message})
+        setTimeout(() => dispatch(close()), timeout * 1000)
+    }
+} 
 
 export default reducer

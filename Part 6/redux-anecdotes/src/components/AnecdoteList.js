@@ -7,9 +7,9 @@ const AnecdoteList = () => {
   const state = useSelector(state => ({anecdotes: state.anecdotes, filter: state.filter}))
   const dispatch = useDispatch()
 
-  const dispatchVote = (id, anecdote) => {
-    dispatch(vote(id))
-    dispatch(notify(`You voted ${anecdote}`))
+  const dispatchVote = (anecdote) => {
+    dispatch(vote(anecdote))
+    dispatch(notify(`You voted ${anecdote.content}`, 1))
   }
 
   const anecdotes = state.anecdotes.filter(anecdote => anecdote.content.includes(state.filter))
@@ -23,7 +23,7 @@ const AnecdoteList = () => {
           </div>
           <div>
             has {anecdote.votes}
-            <button onClick={() => dispatchVote(anecdote.id, anecdote.content)}>vote</button>
+            <button onClick={() => dispatchVote(anecdote)}>vote</button>
           </div>
         </div>
       )}

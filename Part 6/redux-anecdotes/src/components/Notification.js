@@ -22,10 +22,6 @@ const Notification = () => {
 
   const styleToUse = open ? openStyle : closedStyle
 
-  if (open === true) {
-    setTimeout(() => dispatch(close()), 5000);
-  }
-
   return (
     <div style={styleToUse}>
       {message}
