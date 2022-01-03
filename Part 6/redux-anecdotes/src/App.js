@@ -1,10 +1,17 @@
 import React, { useEffect } from 'react'
-import AnecdoteForm from './components/AnecdoteForm'
-import AnecdoteList from './components/AnecdoteList'
-import Notification from './components/Notification'
-import Filter from './components/Filter'
 import { useDispatch } from 'react-redux'
 import { loadAnecdotes } from './reducers/anecdoteReducer'
+
+// these components use redux hooks (recommended/preferred way)
+// import AnecdoteForm from './components/redux-hooks/AnecdoteForm'
+import AnecdoteList from './components/redux-hooks/AnecdoteList'
+// import Notification from './components/redux-hooks/Notification'
+// import Filter from './components/redux-hooks/Filter'
+
+// these components use older redux connect style
+import ConnectNotification from './components/redux-connect/ConnectNotification'
+import ConnectFilter from './components/redux-connect/ConnectFilter'
+import ConnectAnecdoteForm from './components/redux-connect/ConnectAnecdoteForm'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -15,10 +22,10 @@ const App = () => {
   return (
     <div>
       <h2>Anecdotes</h2>
-      <Notification />
-      <Filter />
+      <ConnectNotification />
+      <ConnectFilter />
       <AnecdoteList />
-      <AnecdoteForm />
+      <ConnectAnecdoteForm />
     </div>
   )
 }

@@ -1,7 +1,10 @@
 const initial = {
     message: '',
-    open: false
+    open: false,
+    timeoutID: 0
 }
+
+let timeoutID
 
 const reducer = (state = initial, action) => {
     switch (action.type) {
@@ -18,8 +21,9 @@ const close = () => ({type: 'CLOSE'})
 
 export const notify = (message, timeout=1) => {
     return (dispatch) => {
+        clearTimeout(timeoutID)
         dispatch({type: 'NOTIFY', message: message})
-        setTimeout(() => dispatch(close()), timeout * 1000)
+        timeoutID = setTimeout(() => dispatch(close()), timeout * 1000)
     }
 } 
 
